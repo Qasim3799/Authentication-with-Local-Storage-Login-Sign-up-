@@ -10,7 +10,7 @@ const signUp = (event) => {
     const email = document.getElementById('email').value.trim();
     const password = document.getElementById('password').value.trim();
 
-    if(checkEmailDoesNotExist(email) === true){
+    if(!emailAlreadyExists(email) === true){
         addUser(firstName, email, password);
         alert('Sign up successful')
     }
@@ -29,12 +29,12 @@ const login = (event) => {
     const email = document.getElementById('email').value.trim();
     const password = document.getElementById('password').value.trim();
 
-    if(checkEmailDoesNotExist(email)){
+    if(!emailAlreadyExists(email)){
         alert('Email does not exist')
     }
     else{
         users = getUsers();
-        if(users[email][2] === password){
+        if(users[email].password === password){
             alert('Login Successful')
         }else{
             alert('Incorrect password')
@@ -43,12 +43,12 @@ const login = (event) => {
 }
 
 // function to check if email is availble
-const checkEmailDoesNotExist = (email) => {
+const emailAlreadyExists = (email) => {
     users = getUsers();
     if(users[email]){
-        return false  // if email already exists
+        return true  // if email already exists
     }else{
-        return true;   // if email is available
+        return false;   // if email is available
     } 
 }
 
@@ -56,7 +56,7 @@ const checkEmailDoesNotExist = (email) => {
 // function to add user to local storage
 const addUser = (firstName, email, password) => {
     users = getUsers();
-    users[email] = [firstName, email, password];
+    users[email] = {firstName:firstName, email:email, password: password};
     localStorage.setItem('users', JSON.stringify(users))
 
     // users: {abc@gmail:[username, email, password], xyz@gmail.com:[username, email, password]}
