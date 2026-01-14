@@ -12,6 +12,8 @@ const signUp = (event) => {
 
     if(!emailAlreadyExists(email) === true){
         addUser(firstName, email, password);
+        window.location.href = 'login.html'   // redirects to the login page after sign up
+
         alert('Sign up successful')
     }
     else{
